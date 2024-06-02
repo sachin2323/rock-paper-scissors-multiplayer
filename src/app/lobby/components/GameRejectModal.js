@@ -19,10 +19,13 @@ const GameRejectModal = ({ rejectModal, onCloseRejectModal }) => {
     >
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Rejected !!!</DialogTitle>
+          <DialogTitle>Game Request Rejected !</DialogTitle>
           <DialogDescription>
-            <p>{rejectModal.opponentName} has rejected to play with you.</p>
+            <p className="py-2 mb-2 text-lg">
+              {rejectModal.opponentName} has rejected to play with you.
+            </p>
             <Button
+              variant="destructive"
               onClick={() => {
                 onCloseRejectModal();
               }}

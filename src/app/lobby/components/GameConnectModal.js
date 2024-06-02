@@ -15,30 +15,38 @@ const GameConnectModal = ({ connectModal, onCloseConnectModal }) => {
     <Dialog open={!!connectModal} onOpenChange={() => onCloseConnectModal()}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>New Game Request</DialogTitle>
+          <DialogTitle>Game Request Received !</DialogTitle>
           <DialogDescription>
-            <p>{connectModal.playerName} has requested to play with you.</p>
-            <p>Please accept to start the game</p>
-            <Button
-              onClick={() =>
-                onGameAccept({
-                  opponentName: connectModal.opponentName,
-                  opponentId: connectModal.opponentId,
-                })
-              }
-            >
-              Accept
-            </Button>
-            <Button
-              onClick={() =>
-                onGameReject({
-                  opponentName: connectModal.opponentName,
-                  playerId: connectModal.playerId,
-                })
-              }
-            >
-              Reject
-            </Button>
+            <div className="py-2 my-2">
+              <p className="text-lg">
+                {connectModal.playerName} has requested to play with you.
+              </p>
+              <p className="text-lg">Please accept to start the game.</p>
+            </div>
+            <div className="flex justify-between">
+              <Button
+                variant="destructive"
+                onClick={() =>
+                  onGameReject({
+                    opponentName: connectModal.opponentName,
+                    playerId: connectModal.playerId,
+                  })
+                }
+              >
+                Reject
+              </Button>
+
+              <Button
+                onClick={() =>
+                  onGameAccept({
+                    opponentName: connectModal.playerName,
+                    opponentId: connectModal.playerId,
+                  })
+                }
+              >
+                Accept
+              </Button>
+            </div>
           </DialogDescription>
         </DialogHeader>
       </DialogContent>

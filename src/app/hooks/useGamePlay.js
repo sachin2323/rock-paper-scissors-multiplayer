@@ -31,8 +31,9 @@ const useGamePlay = () => {
 
   useEffect(() => {
     channel.onmessage = (ev) => {
-      if (ev.data?.id === playerId || opponentMove.id) return;
-      setOpponentMove({ id: ev.data?.id, move: ev.data?.move });
+      if (ev.data?.opponentId === playerId) {
+        setOpponentMove({ id: ev.data?.id, move: ev.data?.move });
+      }
     };
   });
 
@@ -59,7 +60,11 @@ const useGamePlay = () => {
       id: playerId,
       move: selectedMove,
     });
-    channel.postMessage({ id: playerId, move: selectedMove });
+    channel.postMessage({
+      playerId: playerId,
+      opponentId: opponent.id,
+      move: selectedMove,
+    });
   };
 
   const handlePlayAgain = () => {
@@ -121,7 +126,6 @@ const useGamePlay = () => {
     onMoveSelect: handelMoveSelection,
     onClearAllPlayersMove: handleClearAllPlayersMove,
     onPlayAgain: handlePlayAgain,
-    onResetGame: handleGameReset,
   };
 };
 

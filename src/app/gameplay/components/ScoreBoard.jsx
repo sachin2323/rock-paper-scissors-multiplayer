@@ -26,11 +26,15 @@ const ScoreBoard = ({ player, opponent }) => {
           </TableHeader>
           <TableBody>
             <TableRow>
-              <TableCell className="font-medium">{player.name}</TableCell>
+              <TableCell className="font-medium capitalize">
+                {player.name}
+              </TableCell>
               <TableCell className="text-right">{player.score || 0}</TableCell>
             </TableRow>
             <TableRow>
-              <TableCell className="font-medium">{opponent.name}</TableCell>
+              <TableCell className="font-medium capitalize">
+                {opponent.name}
+              </TableCell>
               <TableCell className="text-right">
                 {opponent.score || 0}
               </TableCell>

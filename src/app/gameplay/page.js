@@ -9,6 +9,9 @@ import { Button } from "@/components/ui/button";
 import { useLogout } from "../hooks/useLogout";
 import useGamePlay from "../hooks/useGamePlay";
 import { PLAYER_NAME } from "@/lib/constants";
+import Header from "./components/Header";
+import ScoreBoard from "./components/ScoreBoard";
+import LostConnection from "./components/LostConnection";
 
 const GamePlay = () => {
   const playerName = sessionStorage.getItem(PLAYER_NAME);
@@ -20,37 +23,38 @@ const GamePlay = () => {
     opponentMove,
     openResultModal,
     openGameResultModal,
-    onGameReset,
     onMoveSelect,
     onClearAllPlayersMove,
     onPlayAgain,
-    onResetGame,
+    onGameReset,
   } = useGamePlay();
+
   const { onLogout } = useLogout();
+
   if (!opponent) {
-    return (
-      <>
-        <p>lost connection with opponent</p>
-        <Button onClick={() => onGameReset({ context: "CONNECTION_LOST" })}>
-          Go to game lobby
-        </Button>
-      </>
-    );
+    return <LostConnection onGameReset={onGameReset} />;
   }
 
   return (
-    <div>
-      <p>
-        Welcome to the challenge, {playerName}
-        <Button onClick={() => onLogout()}>Logout</Button>
-      </p>
+    <div className="mx-auto w-full h-screen sm:w-2/4 p-3">
+      <Header
+        playerName={playerName}
+        onGameReset={onGameReset}
+        onLogout={onLogout}
+      />
+
+      <div className="my-2">
+        <ScoreBoard opponent={opponent} player={player} />
+      </div>
+
       <GameScreen
         player={player}
         playerMove={playerMove}
         opponentMove={opponentMove}
         opponent={opponent}
       />
-      <div className="mt-5">
+
+      <div className="my-4">
         <GameControls
           disabled={!!playerMove?.move}
           onMoveSelect={onMoveSelect}
@@ -58,14 +62,16 @@ const GamePlay = () => {
       </div>
 
       {openResultModal && (
-        <RoundResult
-          result={openResultModal}
-          onNextRound={onClearAllPlayersMove}
-          playerMove={playerMove}
-          opponentMove={opponentMove}
-          opponent={opponent}
-          player={player}
-        />
+        <div className="w-full">
+          <RoundResult
+            result={openResultModal}
+            onNextRound={onClearAllPlayersMove}
+            playerMove={playerMove}
+            opponentMove={opponentMove}
+            opponent={opponent}
+            player={player}
+          />
+        </div>
       )}
 
       {openGameResultModal?.won?.id === playerId ? (
@@ -73,14 +79,14 @@ const GamePlay = () => {
           variant="Won"
           result={openGameResultModal}
           onPlayAgain={onPlayAgain}
-          onResetGame={onResetGame}
+          onResetGame={onGameReset}
         />
       ) : (
         <GameResult
           variant="Lost"
           result={openGameResultModal}
           onPlayAgain={onPlayAgain}
-          onResetGame={onResetGame}
+          onResetGame={onGameReset}
         />
       )}
     </div>

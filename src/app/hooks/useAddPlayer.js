@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
   ALL_PLAYERS,
+  ERRORS_ENUM,
   LEADER_BOARD,
   PLAYER_ID_KEY,
   PLAYER_NAME,
@@ -13,15 +14,23 @@ import {
 const useAddPlayer = () => {
   const router = useRouter();
   const [playerName, setPlayerName] = useState("");
+  const [error, setError] = useState("");
 
   const playerId = sessionStorage.getItem(PLAYER_ID_KEY);
   const allPlayers = JSON.parse(localStorage.getItem(ALL_PLAYERS) || `{}`);
+  const allNames = Object.values(allPlayers).map((player) =>
+    player.name.toLowerCase()
+  );
 
   const handlePlayerName = (value) => {
     setPlayerName(value);
   };
 
   const createPlayer = () => {
+    if (allNames.includes(playerName.toLowerCase())) {
+      setError(ERRORS_ENUM.NAME_ERR);
+      return;
+    }
     let playerId = sessionStorage.getItem(PLAYER_ID_KEY);
     if (!playerId) {
       playerId = `${Date.now()}${Math.random()}`; // generate unique UUID
@@ -50,6 +59,7 @@ const useAddPlayer = () => {
 
   return {
     playerName,
+    error,
     onChangeName: handlePlayerName,
     onAddPlayer: handleNavToLobby,
   };

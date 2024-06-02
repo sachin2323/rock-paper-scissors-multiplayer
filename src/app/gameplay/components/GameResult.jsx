@@ -29,9 +29,9 @@ const GameResult = ({ variant, result, onResetGame, onPlayAgain }) => {
           <DialogContent>
             <DialogHeader>
               <DialogDescription>
-                <Card>
+                <Card className="mt-4">
                   <CardHeader>
-                    <CardTitle>You {variant} !!!!!</CardTitle>
+                    <CardTitle>You {variant} !!!</CardTitle>
                     <CardDescription>
                       {variant === "Won" ? "Party hard" : "Try Again"}
                     </CardDescription>
@@ -47,6 +47,7 @@ const GameResult = ({ variant, result, onResetGame, onPlayAgain }) => {
                   <CardFooter className="flex justify-between">
                     <Button onClick={() => onPlayAgain()}>Play Again</Button>
                     <Button
+                      variant="destructive"
                       onClick={() => onResetGame({ context: "EXIT_GAME" })}
                     >
                       Exit

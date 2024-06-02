@@ -20,15 +20,14 @@ const Lobby = () => {
     onGameConnect,
   } = useLobby();
 
-  console.log(requestModal, playerId);
-
   if (Object.keys(allPlayers).length === 1) {
     return <NoActivePlayers />;
   }
 
   return (
-    <div className={`w-500px`}>
+    <div>
       <PlayersList onGameConnect={onGameConnect} />
+
       {requestModal && playerId === requestModal.playerId && (
         <GameRequestModal
           requestModal={requestModal}

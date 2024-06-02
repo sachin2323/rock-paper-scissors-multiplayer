@@ -44,7 +44,6 @@ const GameControls = ({ disabled, onMoveSelect }) => {
           variant="secondary"
           id={"random"}
           onClick={() => {
-            console.log(Math.floor(Math.random() * 3));
             const move = moveCodeList[Math.floor(Math.random() * 3)];
             onMoveSelect(move);
           }}

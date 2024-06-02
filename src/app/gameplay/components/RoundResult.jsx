@@ -26,7 +26,7 @@ const RoundResult = ({
         <DialogHeader>
           <DialogTitle>Result</DialogTitle>
           <DialogDescription>
-            <div className="flex gap-10 mt-5">
+            <div className="flex justify-around items-center mt-3">
               <MoveCard user={player} move={playerMove?.move} />
               <MoveCard user={opponent} move={opponentMove?.move} />
             </div>
@@ -35,10 +35,10 @@ const RoundResult = ({
               <p className="mt-5 text-2xl">Draw</p>
             )}
             {result === RESULT_ENUM.PLAYER_WINS && (
-              <p className="mt-5 text-2xl text-green-400">You Won !!!</p>
+              <p className="mt-5 text-2xl text-green-400">You Won !</p>
             )}
             {result === RESULT_ENUM.OPPONENT_WINS && (
-              <p className="mt-5 text-2xl text-red-400">You Lost !!!</p>
+              <p className="mt-5 text-2xl text-red-400">You Lost.</p>
             )}
             <Button className="mt-3" onClick={() => onNextRound()}>
               Next Round

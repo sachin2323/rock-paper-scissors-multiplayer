@@ -3,7 +3,6 @@
 import {
   ALL_PLAYERS,
   CONNECTION_ENUM,
-  GAME_STATE,
   GAME_STATE_ENUM,
   PLAYER_ID_KEY,
   PLAYER_NAME,
@@ -24,7 +23,11 @@ const useLobby = () => {
   const playerId = sessionStorage.getItem(PLAYER_ID_KEY);
   const playerName = sessionStorage.getItem(PLAYER_NAME);
 
-  if (allPlayers[playerId].game_state === GAME_STATE_ENUM.LIVE) {
+  if (!playerId) {
+    router.push(Routes.HOME);
+  }
+
+  if (allPlayers[playerId]?.game_state === GAME_STATE_ENUM.LIVE) {
     router.push(Routes.GAME_PLAY);
   }
 
@@ -39,12 +42,13 @@ const useLobby = () => {
       state: CONNECTION_ENUM.REQUEST,
     };
     setRequestModal(connectionReq);
-    console.log("set request modal");
     channel.postMessage(connectionReq);
   };
 
   const handleAcceptFlow = ({ opponentId, opponentName }) => {
     channel.postMessage({
+      playerName: playerName,
+      playerId: playerId,
       opponentId: opponentId,
       opponentName: opponentName,
       state: CONNECTION_ENUM.ACCEPT,
@@ -60,17 +64,15 @@ const useLobby = () => {
   };
 
   const handleCloseRejectModal = () => {
-    console.log("clicked here");
     setRejectModal(false);
   };
 
   const handleCloseRequestModal = () => {
-    console.log("clicked here");
     setRequestModal(false);
+    setConnectModal(false);
   };
 
   const handleCloseConnectModal = () => {
-    console.log("clicked here");
     setConnectModal(false);
   };
 
@@ -83,27 +85,11 @@ const useLobby = () => {
           setConnectModal(ev.data);
           break;
         case CONNECTION_ENUM.ACCEPT:
-          try {
-            // console.log(
-            //   "Players",
-            //   allPlayers,
-            //   ev.data.opponentId,
-            //   allPlayers[ev.data.opponentId]
-            // );
-
+          if (ev.data.playerId === playerId) {
             allPlayers[playerId].game_state = GAME_STATE_ENUM.LIVE;
             allPlayers[playerId].opponentId = ev.data.opponentId;
-
             allPlayers[ev.data.opponentId].game_state = GAME_STATE_ENUM.LIVE;
             allPlayers[ev.data.opponentId].opponentId = playerId;
-
-            localStorage.setItem(ALL_PLAYERS, JSON.stringify(allPlayers));
-            router.push(Routes.GAME_PLAY);
-          } catch (e) {
-            console.error(e);
-            allPlayers[ev.data.opponentId].game_state = GAME_STATE_ENUM.LIVE;
-            allPlayers[ev.data.opponentId].opponentId = playerId;
-
             localStorage.setItem(ALL_PLAYERS, JSON.stringify(allPlayers));
             router.push(Routes.GAME_PLAY);
           }
@@ -119,7 +105,6 @@ const useLobby = () => {
 
   useEffect(() => {
     const onPlayerAddition = (e) => {
-      console.log(e);
       const { key, newValue } = e;
       if (key === ALL_PLAYERS) {
         setAllPlayers(JSON.parse(newValue));

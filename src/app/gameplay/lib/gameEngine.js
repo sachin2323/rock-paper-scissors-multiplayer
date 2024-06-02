@@ -58,7 +58,6 @@ const moveCalculation = (playerMove, opponentMove) => {
 };
 
 export const gameEngine = (player, opponent) => {
-  console.log(player, opponent);
   const result = moveCalculation(player.move, opponent.move);
   return result;
 };

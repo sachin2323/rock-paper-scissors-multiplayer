@@ -14,7 +14,9 @@ const PlayersToConnect = ({ onGameConnect }) => {
           return (
             <>
               <TableRow>
-                <TableCell className="font-medium">{opponent.name}</TableCell>
+                <TableCell className="font-medium capitalize">
+                  {opponent.name}
+                </TableCell>
                 <TableCell>
                   {opponent.game_state === GAME_STATE_ENUM.LIVE
                     ? "PLAYING"
@@ -22,7 +24,7 @@ const PlayersToConnect = ({ onGameConnect }) => {
                 </TableCell>
                 <TableCell className="text-right">
                   {opponent.game_state === GAME_STATE_ENUM.LIVE ? (
-                    <p>In another match</p>
+                    <p>In a match</p>
                   ) : (
                     <Button
                       onClick={() => {
@@ -32,7 +34,7 @@ const PlayersToConnect = ({ onGameConnect }) => {
                         });
                       }}
                     >
-                      Connect
+                      Play
                     </Button>
                   )}
                 </TableCell>
