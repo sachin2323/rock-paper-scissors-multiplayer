@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import useLobby from "@/app/hooks/useLobby";
 import { TableCell, TableRow } from "@/components/ui/table";
@@ -12,7 +13,7 @@ const PlayersToConnect = ({ onGameConnect }) => {
         .filter((player) => player.id !== playerId)
         .map((opponent) => {
           return (
-            <>
+            <React.Fragment key={opponent.id}>
               <TableRow>
                 <TableCell className="font-medium capitalize">
                   {opponent.name}
@@ -39,7 +40,7 @@ const PlayersToConnect = ({ onGameConnect }) => {
                   )}
                 </TableCell>
               </TableRow>
-            </>
+            </React.Fragment>
           );
         })}
     </>

@@ -9,6 +9,7 @@ const Header = () => {
         src={"/rockPaperScissorMain.svg"}
         width="500"
         height="500"
+        priority
         alt="Rock, Paper And Scissors"
       />
     </div>

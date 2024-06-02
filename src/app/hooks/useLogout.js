@@ -1,3 +1,5 @@
+"use client";
+
 import { ALL_PLAYERS, PLAYER_ID_KEY } from "@/lib/constants";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -13,14 +15,14 @@ export const useLogout = () => {
     router.push("/");
   };
 
-  // useEffect(() => {
-  //   const logoutUser = (e) => {
-  //     e.preventDefault();
-  //     handleLogout();
-  //   };
-  //   window.addEventListener("beforeunload", logoutUser);
-  //   () => window.removeEventListener("beforeunload", logoutUser);
-  // });
+  useEffect(() => {
+    const logoutUser = (e) => {
+      e.preventDefault();
+      handleLogout();
+    };
+    window.addEventListener("beforeunload", logoutUser);
+    () => window.removeEventListener("beforeunload", logoutUser);
+  });
 
   return { onLogout: handleLogout };
 };
