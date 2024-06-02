@@ -16,6 +16,8 @@ const useAddPlayer = () => {
   const [playerName, setPlayerName] = useState("");
   const [error, setError] = useState("");
 
+  if (typeof window === "undefined") return {};
+
   const playerId = sessionStorage.getItem(PLAYER_ID_KEY);
   const allPlayers = JSON.parse(localStorage.getItem(ALL_PLAYERS) || `{}`);
   const allNames = Object.values(allPlayers).map((player) =>

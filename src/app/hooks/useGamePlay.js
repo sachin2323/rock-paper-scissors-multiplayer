@@ -5,6 +5,7 @@ import {
   GAME_STATE_ENUM,
   LEADER_BOARD,
   PLAYER_ID_KEY,
+  PLAYER_NAME,
   RESULT_ENUM,
   Routes,
 } from "@/lib/constants";
@@ -17,18 +18,9 @@ const useGamePlay = () => {
   const [opponentMove, setOpponentMove] = useState({});
   const [openResultModal, setOpenResultModal] = useState(false);
   const [openGameResultModal, setOpenGameResultModal] = useState(false);
-  const [allPlayers, setAllPlayers] = useState(
-    JSON.parse(localStorage.getItem(ALL_PLAYERS) || `{}`)
-  );
-
+  const [allPlayers, setAllPlayers] = useState({});
+  //JSON.parse(localStorage.getItem(ALL_PLAYERS) || `{}`)
   const route = useRouter();
-
-  const playerId = sessionStorage.getItem(PLAYER_ID_KEY);
-
-  const player = allPlayers[playerId];
-  const opponent = allPlayers[player?.opponentId];
-
-  const channel = new BroadcastChannel(`game_started`);
 
   useEffect(() => {
     channel.onmessage = (ev) => {
@@ -48,6 +40,16 @@ const useGamePlay = () => {
     window.addEventListener("storage", onPlayersUpdate);
     return () => window.removeEventListener("storage", onPlayersUpdate);
   });
+
+  if (typeof window === "undefined") return {};
+
+  const playerId = sessionStorage.getItem(PLAYER_ID_KEY);
+  const playerName = sessionStorage.getItem(PLAYER_NAME);
+
+  const player = allPlayers[playerId];
+  const opponent = allPlayers[player?.opponentId];
+
+  const channel = new BroadcastChannel(`game_started`);
 
   const handleClearAllPlayersMove = () => {
     localStorage.setItem(ALL_PLAYERS, JSON.stringify(allPlayers));
@@ -117,6 +119,7 @@ const useGamePlay = () => {
 
   return {
     playerId,
+    playerName,
     player,
     opponent,
     playerMove,

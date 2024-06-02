@@ -1,14 +1,15 @@
 "use client";
 
-import { PLAYER_NAME, THEME_BG_COLOR } from "@/lib/constants";
+import { THEME_BG_COLOR } from "@/lib/constants";
 import Lobby from "./components/Lobby";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useLogout } from "../hooks/useLogout";
+import useLobby from "../hooks/useLobby";
 
 export default function Page() {
+  const { playerName } = useLobby();
   const { onLogout } = useLogout();
-  const playerName = sessionStorage.getItem(PLAYER_NAME);
 
   return (
     <main>

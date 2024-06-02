@@ -5,18 +5,16 @@ import GameControls from "./components/GameControls";
 import GameScreen from "./components/GameScreen";
 import GameResult from "./components/GameResult";
 import RoundResult from "./components/RoundResult";
-import { Button } from "@/components/ui/button";
 import { useLogout } from "../hooks/useLogout";
 import useGamePlay from "../hooks/useGamePlay";
-import { PLAYER_NAME } from "@/lib/constants";
 import Header from "./components/Header";
 import ScoreBoard from "./components/ScoreBoard";
 import LostConnection from "./components/LostConnection";
 
 const GamePlay = () => {
-  const playerName = sessionStorage.getItem(PLAYER_NAME);
   const {
     playerId,
+    playerName,
     player,
     opponent,
     playerMove,

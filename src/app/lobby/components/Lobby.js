@@ -20,7 +20,7 @@ const Lobby = () => {
     onGameConnect,
   } = useLobby();
 
-  if (Object.keys(allPlayers).length === 1) {
+  if (Object.keys(allPlayers || {}).length === 1) {
     return <NoActivePlayers />;
   }
 
