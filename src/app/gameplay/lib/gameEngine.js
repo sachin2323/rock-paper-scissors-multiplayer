@@ -1,34 +1,58 @@
-import { MOVES_ENUM, RESULT_ENUM } from "@/app/lib/constants";
+import { MOVES_ENUM, RESULT_ENUM } from "@/lib/constants";
 
 const moveCalculation = (playerMove, opponentMove) => {
   if (
-    playerMove === MOVES_ENUM.SCISSORS &&
-    opponentMove === MOVES_ENUM.SCISSORS
+    playerMove === MOVES_ENUM.SCISSORS.code &&
+    opponentMove === MOVES_ENUM.SCISSORS.code
   ) {
     return RESULT_ENUM.DRAW;
   }
-  if (playerMove === MOVES_ENUM.PAPER && opponentMove === MOVES_ENUM.PAPER) {
+  if (
+    playerMove === MOVES_ENUM.PAPER.code &&
+    opponentMove === MOVES_ENUM.PAPER.code
+  ) {
     return RESULT_ENUM.DRAW;
   }
-  if (playerMove === MOVES_ENUM.ROCK && opponentMove === MOVES_ENUM.ROCK) {
+  if (
+    playerMove === MOVES_ENUM.ROCK.code &&
+    opponentMove === MOVES_ENUM.ROCK.code
+  ) {
     return RESULT_ENUM.DRAW;
   }
-  if (playerMove === MOVES_ENUM.ROCK && opponentMove === MOVES_ENUM.SCISSORS) {
+  if (
+    playerMove === MOVES_ENUM.ROCK.code &&
+    opponentMove === MOVES_ENUM.SCISSORS.code
+  ) {
     return RESULT_ENUM.PLAYER_WINS;
   }
-  if (playerMove === MOVES_ENUM.SCISSORS && opponentMove === MOVES_ENUM.PAPER) {
+  if (
+    playerMove === MOVES_ENUM.SCISSORS.code &&
+    opponentMove === MOVES_ENUM.PAPER.code
+  ) {
     return RESULT_ENUM.PLAYER_WINS;
   }
-  if (playerMove === MOVES_ENUM.PAPER && opponentMove === MOVES_ENUM.ROCK) {
+  if (
+    playerMove === MOVES_ENUM.PAPER.code &&
+    opponentMove === MOVES_ENUM.ROCK.code
+  ) {
     return RESULT_ENUM.PLAYER_WINS;
   }
-  if (opponentMove === MOVES_ENUM.ROCK && playerMove === MOVES_ENUM.SCISSORS) {
+  if (
+    opponentMove === MOVES_ENUM.ROCK.code &&
+    playerMove === MOVES_ENUM.SCISSORS.code
+  ) {
     return RESULT_ENUM.OPPONENT_WINS;
   }
-  if (opponentMove === MOVES_ENUM.SCISSORS && playerMove === MOVES_ENUM.PAPER) {
+  if (
+    opponentMove === MOVES_ENUM.SCISSORS.code &&
+    playerMove === MOVES_ENUM.PAPER.code
+  ) {
     return RESULT_ENUM.OPPONENT_WINS;
   }
-  if (opponentMove === MOVES_ENUM.PAPER && playerMove === MOVES_ENUM.ROCK) {
+  if (
+    opponentMove === MOVES_ENUM.PAPER.code &&
+    playerMove === MOVES_ENUM.ROCK.code
+  ) {
     return RESULT_ENUM.OPPONENT_WINS;
   }
 };

@@ -6,22 +6,53 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
 import { Button } from "@/components/ui/button";
 
 import React from "react";
+import Image from "next/image";
 
-const GameResult = ({ result, onResetGame, onPlayAgain }) => {
+const GameResult = ({ variant, result, onResetGame, onPlayAgain }) => {
   return (
     <div>
       {result && (
         <Dialog open={!!result}>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Result</DialogTitle>
               <DialogDescription>
-                <p>{result?.name} Won!!!!!</p>
-                <Button onClick={() => onPlayAgain()}>Play Again</Button>
-                <Button onClick={() => onResetGame()}>Exit</Button>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>You {variant} !!!!!</CardTitle>
+                    <CardDescription>
+                      {variant === "Won" ? "Party hard" : "Try Again"}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="flex justify-center">
+                    <Image
+                      src={variant === "Won" ? "/victory.gif" : "/defeat.gif"}
+                      width="200"
+                      height="200"
+                      alt={"test"}
+                    />
+                  </CardContent>
+                  <CardFooter className="flex justify-between">
+                    <Button onClick={() => onPlayAgain()}>Play Again</Button>
+                    <Button
+                      onClick={() => onResetGame({ context: "EXIT_GAME" })}
+                    >
+                      Exit
+                    </Button>
+                  </CardFooter>
+                </Card>
               </DialogDescription>
             </DialogHeader>
           </DialogContent>

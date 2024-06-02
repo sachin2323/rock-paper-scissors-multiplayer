@@ -1,27 +1,34 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { ALL_PLAYERS, PLAYER_ID_KEY, PLAYER_NAME } from "../lib/constants";
+import { PLAYER_NAME } from "@/lib/constants";
 import Lobby from "./components/Lobby";
-import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { useLogout } from "../hooks/useLogout";
 
 export default function Page() {
+  const { onLogout } = useLogout();
   const playerName = sessionStorage.getItem(PLAYER_NAME);
-  const playerId = sessionStorage.getItem(PLAYER_ID_KEY);
-  const router = useRouter();
-  const handleLogout = () => {
-    const playerList = JSON.parse(localStorage.getItem(ALL_PLAYERS) || `{}`);
-    delete playerList[playerId];
-    localStorage.setItem(ALL_PLAYERS, JSON.stringify(playerList));
-    sessionStorage.clear();
-    localStorage.removeItem(GAME_DATA);
-    router.push("/");
-  };
 
   return (
     <main>
-      <h1 className="mb-2">Hello, {playerName}</h1>
-      <Lobby />
+      <div className="flex flex-1 h-dvh">
+        <div className="w-1/5 bg-[#26006E]">
+          <Image
+            src={"/rockPaperScissor.svg"}
+            width="600"
+            height="100"
+            alt="Rock, Paper And Scissors"
+          />
+        </div>
+        <div className="max-w-md mx-auto flex-1">
+          <h1 className="mb-2">
+            Hello, {playerName}
+            <Button onClick={() => onLogout()}>Logout</Button>
+          </h1>
+          <Lobby />
+        </div>
+      </div>
     </main>
   );
 }

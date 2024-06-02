@@ -1,71 +1,57 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useEffect, useId, useState } from "react";
+import useAddPlayer from "./hooks/useAddPlayer";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
-  ALL_PLAYERS,
-  GAME_STATE,
-  GAME_STATE_ENUM,
-  PLAYER_ID_KEY,
-  PLAYER_NAME,
-  Routes,
-} from "./lib/constants";
-//TODO - create and display leader board with tab sync using local state and local state sync
-//TODO -
-//TODO -
-//TODO -
-//TODO -
-//TODO -
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function Home() {
-  const router = useRouter();
-  const [playerName, setPlayerName] = useState("");
-
-  const playerId = sessionStorage.getItem(PLAYER_ID_KEY);
-  const allPlayers = JSON.parse(localStorage.getItem(ALL_PLAYERS) || `{}`);
-  const gameState = sessionStorage.getItem(GAME_STATE);
-
-  useEffect(() => {
-    if (!playerId) {
-      const id = `${Date.now()}${Math.random()}`; // generate unique UUID
-      sessionStorage.setItem(PLAYER_ID_KEY, id);
-      return;
-    }
-
-    const currentPlayer = allPlayers[playerId];
-    if (!!currentPlayer && gameState !== GAME_STATE_ENUM.LIVE) {
-      router.push(Routes.LOBBY);
-    }
-  }, []);
-
-  const handleLobby = (e) => {
-    sessionStorage.setItem(PLAYER_NAME, playerName);
-    const players = {
-      ...allPlayers,
-      [playerId]: { name: playerName, id: playerId },
-    };
-    localStorage.setItem(ALL_PLAYERS, JSON.stringify(players));
-    router.push(Routes.LOBBY);
-  };
-
+  const { playerName, onChangeName, onAddPlayer } = useAddPlayer();
   return (
     <main>
-      <p className="mb-3 text-xl">Enter Your Name</p>
-      <input
-        type="text"
-        className="text-black"
-        value={playerName}
-        onChange={(e) => {
-          setPlayerName(e.target.value);
-        }}
-      />
-      <button
-        onClick={(e) => {
-          handleLobby(e);
-        }}
-      >
-        Let&apos;s get Started
-      </button>
+      <div className="flex justify-center items-center bg-[#26006E]">
+        <Image
+          src={"/rockPaperScissorMain.svg"}
+          width="500"
+          height="500"
+          alt="Rock, Paper And Scissors"
+        />
+      </div>
+      <div className="max-w-md mx-auto p-4 mt-5 sm:mt-7 sm:p-0">
+        <Card>
+          <CardHeader>
+            <CardTitle>Login</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="mt-5 mb-3 text-xl">Enter Your Name</p>
+            <Input
+              type="text"
+              className="text-black mb-5"
+              value={playerName}
+              onChange={(e) => {
+                onChangeName(e.target.value);
+              }}
+            />
+          </CardContent>
+          <CardFooter>
+            <Button
+              onClick={(e) => {
+                onAddPlayer(e);
+              }}
+            >
+              Let&apos;s get Started
+            </Button>
+          </CardFooter>
+        </Card>
+      </div>
     </main>
   );
 }

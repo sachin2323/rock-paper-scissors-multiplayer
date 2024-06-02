@@ -3,19 +3,23 @@ export const PLAYER_NAME = "PLAYER_NAME";
 export const GAME_STATE = "GAME_STATE";
 export const ALL_PLAYERS = "ALL_PLAYERS";
 export const ENGAGED_PLAYERS = "ENGAGED_PLAYERS";
-export const GAME_DATA = "GAME_DATA";
-export const LEADERBOARD = "LEADERBOARD";
+export const LEADER_BOARD = "LEADER_BOARD";
 
 export const GAME_STATE_ENUM = {
   NOT_STARTED: "NOT_STARTED",
   LIVE: "LIVE",
-  ENDED: "ENDED",
+};
+
+export const CONNECTION_ENUM = {
+  REQUEST: "REQUEST",
+  ACCEPT: "ACCEPT",
+  REJECT: "REJECT",
 };
 
 export const MOVES_ENUM = {
-  ROCK: "ROCK",
-  PAPER: "PAPER",
-  SCISSORS: "SCISSORS",
+  ROCK: { code: "ROCK", imgSrc: "/rock.png", title: "Rock" },
+  PAPER: { code: "PAPER", imgSrc: "/paper.png", title: "Paper" },
+  SCISSORS: { code: "SCISSORS", imgSrc: "/scissors.png", title: "Scissors" },
 };
 
 export const RESULT_ENUM = {
@@ -27,4 +31,5 @@ export const RESULT_ENUM = {
 export const Routes = {
   LOBBY: "/lobby",
   GAME_PLAY: "/gameplay",
+  HOME: "/",
 };
