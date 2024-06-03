@@ -13,7 +13,7 @@ const Header = ({ playerName, onGameReset, onLogout }) => {
       <div className="flex">
         <Button
           variant="secondary"
-          className="mr-3"
+          className="mr-2 sm:mr-3"
           onClick={() => onGameReset({ context: GAME_EXIT_ENUM.PLAYER_EXIT })}
         >
           Exit Match

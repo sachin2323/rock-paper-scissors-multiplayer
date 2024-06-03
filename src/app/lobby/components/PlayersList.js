@@ -15,7 +15,7 @@ const PlayersList = ({ onGameConnect }) => {
   return (
     <Table>
       <TableCaption>active players in the lobby</TableCaption>
-      <ScrollArea className="h-[300px] sm:h-[400px] rounded-md">
+      <ScrollArea className="h-[230px] sm:h-[400px] rounded-md">
         <TableHeader>
           <TableRow>
             <TableHead className="w-[100px]">Name</TableHead>

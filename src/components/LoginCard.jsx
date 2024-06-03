@@ -13,16 +13,16 @@ import {
 const LoginCard = ({ playerName, error, onAddPlayer, onChangeName }) => {
   const MAX_CHARS = 10;
   return (
-    <div className="max-w-md mx-auto p-4 mt-5 sm:mt-7 sm:p-0">
+    <div className="max-w-md mx-auto p-4 sm:mt-7 sm:p-0">
       <Card>
         <CardHeader>
           <CardTitle>Login</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="mt-5 mb-3 text-xl">Enter Your Name</p>
+          <p className="mb-2 text-xl">Enter Your Name</p>
           <Input
             type="text"
-            className="text-black mb-5"
+            className="text-black mb-2"
             value={playerName}
             onChange={(e) => {
               const value = (e.target.value || "").trim();
