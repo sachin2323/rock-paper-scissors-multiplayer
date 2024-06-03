@@ -114,8 +114,9 @@ const Rules = ({ openRules, onOpenRules }) => {
                       </AccordionTrigger>
                       <AccordionContent>
                         In the lobby, players who are available to play will be
-                        marked as "Available". Players who are currently in a
-                        game will be marked as "Playing".
+                        marked as &quot;Available&quot;. Players who are
+                        currently in a game will be marked as
+                        &quot;Playing&quot;.
                       </AccordionContent>
                     </AccordionItem>
                     <AccordionItem value="item-4">
@@ -181,8 +182,8 @@ const Rules = ({ openRules, onOpenRules }) => {
                       <AccordionContent>
                         Your status updates automatically based on your actions.
                         If you are not in a game, you will be marked as
-                        "Available". If you are in a game, you will be marked as
-                        "Playing".
+                        &quot;Available&quot;. If you are in a game, you will be
+                        marked as &quot;Playing&quot;.
                       </AccordionContent>
                     </AccordionItem>
                     <AccordionItem value="item-11">

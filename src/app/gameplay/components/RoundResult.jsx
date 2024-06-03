@@ -4,6 +4,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -25,25 +26,38 @@ const RoundResult = ({
     <Dialog open={!!result}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Result</DialogTitle>
+          <DialogTitle className="text-center">Result</DialogTitle>
           <DialogDescription>
-            <div className="flex justify-around items-center mt-3">
-              <MoveCard user={player} move={playerMove?.move} />
-              <MoveCard user={opponent} move={opponentMove?.move} />
+            <div className="flex justify-between items-center mt-3">
+              <MoveCard
+                user={player}
+                move={playerMove?.move}
+                renderInsideModal
+              />
+              <MoveCard
+                user={opponent}
+                move={opponentMove?.move}
+                renderInsideModal
+              />
             </div>
 
             {result === RESULT_ENUM.DRAW && (
-              <p className="mt-5 text-2xl">Draw</p>
+              <p className="mt-5 text-2xl text-center">Draw</p>
             )}
             {result === RESULT_ENUM.PLAYER_WINS && (
-              <p className="mt-5 text-2xl text-green-400">You Won !</p>
+              <p className="mt-5 text-2xl text-green-400 text-center">
+                You Won !
+              </p>
             )}
             {result === RESULT_ENUM.OPPONENT_WINS && (
-              <p className="mt-5 text-2xl text-red-400">You Lost.</p>
+              <p className="mt-5 text-2xl text-red-400 text-center">
+                You Lost.
+              </p>
             )}
-            <Button className="mt-3" onClick={() => onNextRound()}>
-              Next Round
-            </Button>
+
+            <div className="flex justify-center items-center mt-3">
+              <Button onClick={() => onNextRound()}>Next Round</Button>
+            </div>
           </DialogDescription>
         </DialogHeader>
       </DialogContent>

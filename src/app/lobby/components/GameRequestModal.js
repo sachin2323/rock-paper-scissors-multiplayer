@@ -25,10 +25,11 @@ const GameRequestModal = ({ requestModal, onCloseRequestModal }) => {
         <DialogHeader>
           <DialogTitle>Game Request Sent !</DialogTitle>
           <DialogDescription>
-            <p className="text-lg py-2 mb-2 capitalize">
-              Game request sent to {requestModal.opponentName}
-            </p>
-
+            <div className="my-2 py-2">
+              <p className="text-base capitalize">
+                Game request sent to {requestModal.opponentName}
+              </p>
+            </div>
             <Button
               variant="destructive"
               onClick={() => {

@@ -10,25 +10,31 @@ import {
 import Image from "next/image";
 import { MOVES_ENUM } from "@/lib/constants";
 
-const MoveCard = ({ user, move }) => {
+const MoveCard = ({ user, move, renderInsideModal }) => {
   if (!move) {
-    return <p className="text-xl">Please select a move to play !</p>;
+    return (
+      <p className="text-base mb-3 px-2">Please select a move to play !</p>
+    );
   }
 
   const selectedMove = MOVES_ENUM[move];
 
   return (
-    <Card>
+    <Card className={renderInsideModal && "w-[200px]"}>
       <CardHeader>
-        <CardTitle className="capitalize">{user?.name} has selected</CardTitle>
-        <CardDescription>{selectedMove?.title}</CardDescription>
+        <CardTitle className="capitalize text-left text-lg">
+          {user?.name} has selected
+        </CardTitle>
+        <CardDescription className="capitalize text-left">
+          {selectedMove?.title}
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <Image
           className="mx-auto"
           src={selectedMove?.imgSrc}
-          width="200"
-          height="200"
+          width="100"
+          height="100"
           alt={selectedMove?.title}
         />
       </CardContent>

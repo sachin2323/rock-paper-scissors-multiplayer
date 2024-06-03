@@ -12,6 +12,7 @@ import useLobby from "@/app/hooks/useLobby";
 
 const GameConnectModal = ({ connectModal, onCloseConnectModal }) => {
   const { onGameAccept, onGameReject } = useLobby();
+
   return (
     <Dialog open={!!connectModal} onOpenChange={() => onCloseConnectModal()}>
       <DialogContent>

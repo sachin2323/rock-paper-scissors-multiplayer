@@ -7,8 +7,8 @@ const GameScreen = ({ player, opponent, playerMove, opponentMove }) => {
   return (
     <div>
       {opponentMove.move && (
-        <p className="text-lg text-green-400 capitalize">
-          {opponent.name} has played his move
+        <p className="text-base px-2 text-green-500 capitalize">
+          {opponent.name} has played
         </p>
       )}
       <MoveCard user={player} move={playerMove?.move} />
