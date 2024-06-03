@@ -28,7 +28,7 @@ const RoundResult = ({
         <DialogHeader>
           <DialogTitle className="text-center">Result</DialogTitle>
           <DialogDescription>
-            <div className="flex justify-between items-center mt-3">
+            <div className="flex justify-around items-center mt-3">
               <MoveCard
                 user={player}
                 move={playerMove?.move}

@@ -11,6 +11,7 @@ const GameScreen = ({ player, opponent, playerMove, opponentMove }) => {
           {opponent.name} has played
         </p>
       )}
+
       <MoveCard user={player} move={playerMove?.move} />
     </div>
   );

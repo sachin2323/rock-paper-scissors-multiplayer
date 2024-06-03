@@ -17,8 +17,8 @@ import useLocalStorage from "./useLocalStorage";
 import useSessionStorage from "./useSessionStorage";
 
 const useGamePlay = () => {
-  const [playerMove, setPlayerMove] = useState({});
-  const [opponentMove, setOpponentMove] = useState({});
+  const [playerMove, setPlayerMove] = useState({ ready: true });
+  const [opponentMove, setOpponentMove] = useState({ ready: true });
   const [openResultModal, setOpenResultModal] = useState(false);
   const [openGameResultModal, setOpenGameResultModal] = useState(false);
   const [allPlayers, setAllPlayers] = useLocalStorage(ALL_PLAYERS, {});
@@ -29,8 +29,21 @@ const useGamePlay = () => {
 
   useEffect(() => {
     channel.onmessage = (ev) => {
-      if (ev.data?.opponentId === playerId) {
-        setOpponentMove({ id: ev.data?.id, move: ev.data?.move });
+      switch (ev?.data?.context) {
+        case "MOVE":
+          if (ev.data?.opponentId === playerId) {
+            setOpponentMove({
+              id: ev.data?.id,
+              move: ev.data?.move,
+              ready: false,
+            });
+          }
+          break;
+        case "READY":
+          if (ev.data?.opponentId === playerId) {
+            setPlayerMove((playerMove) => ({ ...playerMove, ready: true }));
+          }
+          break;
       }
     };
   });
@@ -45,17 +58,24 @@ const useGamePlay = () => {
     setPlayerMove((player) => ({ ...player, move: null }));
     setOpponentMove((opponent) => ({ ...opponent, move: null }));
     setOpenResultModal(null);
+    channel.postMessage({
+      playerId: playerId,
+      opponentId: opponent.id,
+      context: "READY",
+    });
   };
 
   const handelMoveSelection = (selectedMove) => {
     setPlayerMove({
       id: playerId,
       move: selectedMove,
+      ready: false,
     });
     channel.postMessage({
       playerId: playerId,
       opponentId: opponent.id,
       move: selectedMove,
+      context: "MOVE",
     });
   };
 

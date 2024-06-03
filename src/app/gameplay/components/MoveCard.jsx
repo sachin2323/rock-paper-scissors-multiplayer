@@ -20,7 +20,7 @@ const MoveCard = ({ user, move, renderInsideModal }) => {
   const selectedMove = MOVES_ENUM[move];
 
   return (
-    <Card className={renderInsideModal && "w-[200px]"}>
+    <Card className={renderInsideModal && "w-[120px] sm:w-[200px]"}>
       <CardHeader>
         <CardTitle className="capitalize text-left text-lg">
           {user?.name} has selected

@@ -54,7 +54,7 @@ const GamePlay = () => {
 
       <div className="my-4">
         <GameControls
-          disabled={!!playerMove?.move}
+          disabled={!!playerMove?.move || !playerMove?.ready}
           onMoveSelect={onMoveSelect}
         />
       </div>
