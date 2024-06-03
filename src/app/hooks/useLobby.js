@@ -10,12 +10,16 @@ import {
 } from "@/lib/constants";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import useLocalStorage from "./useLocalStorage";
+import useSessionStorage from "./useSessionStorage";
 
 const useLobby = () => {
   const [requestModal, setRequestModal] = useState(false);
   const [connectModal, setConnectModal] = useState(false);
   const [rejectModal, setRejectModal] = useState(false);
-  const [allPlayers, setAllPlayers] = useState({});
+  const [allPlayers, setAllPlayers] = useLocalStorage(ALL_PLAYERS, {});
+  const [playerId] = useSessionStorage(PLAYER_ID_KEY, null);
+  const [playerName] = useSessionStorage(PLAYER_NAME, null);
   //JSON.parse(localStorage.getItem(ALL_PLAYERS) || `{}`)
   const router = useRouter();
 
@@ -33,7 +37,8 @@ const useLobby = () => {
             allPlayers[playerId].opponentId = ev.data.opponentId;
             allPlayers[ev.data.opponentId].game_state = GAME_STATE_ENUM.LIVE;
             allPlayers[ev.data.opponentId].opponentId = playerId;
-            localStorage.setItem(ALL_PLAYERS, JSON.stringify(allPlayers));
+            setAllPlayers(allPlayers);
+            // localStorage.setItem(ALL_PLAYERS, JSON.stringify(allPlayers));
             router.push(Routes.GAME_PLAY);
           }
           break;
@@ -44,29 +49,28 @@ const useLobby = () => {
           break;
       }
     };
+    // return () => channel.close();
   });
 
-  useEffect(() => {
-    const onPlayerAddition = (e) => {
-      const { key, newValue } = e;
-      if (key === ALL_PLAYERS) {
-        setAllPlayers(JSON.parse(newValue));
-      }
-    };
-    window.addEventListener("storage", onPlayerAddition);
-    return () => window.removeEventListener("storage", onPlayerAddition);
-  });
+  // useEffect(() => {
+  //   const onPlayerAddition = (e) => {
+  //     const { key, newValue } = e;
+  //     if (key === ALL_PLAYERS) {
+  //       setAllPlayers(JSON.parse(newValue));
+  //     }
+  //   };
+  //   window.addEventListener("storage", onPlayerAddition);
+  //   return () => window.removeEventListener("storage", onPlayerAddition);
+  // });
 
-  if (typeof window === "undefined") return {};
-
-  const playerId = sessionStorage.getItem(PLAYER_ID_KEY);
-  const playerName = sessionStorage.getItem(PLAYER_NAME);
+  // const playerId = sessionStorage.getItem(PLAYER_ID_KEY);
+  // const playerName = sessionStorage.getItem(PLAYER_NAME);
 
   if (!playerId) {
     router.push(Routes.HOME);
   }
 
-  if (allPlayers[playerId]?.game_state === GAME_STATE_ENUM.LIVE) {
+  if (allPlayers?.[playerId]?.game_state === GAME_STATE_ENUM.LIVE) {
     router.push(Routes.GAME_PLAY);
   }
 

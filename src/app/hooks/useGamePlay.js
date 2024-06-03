@@ -12,13 +12,18 @@ import {
 
 import { useRouter } from "next/navigation";
 import { gameEngine } from "../gameplay/lib/gameEngine";
+import useLocalStorage from "./useLocalStorage";
+import useSessionStorage from "./useSessionStorage";
 
 const useGamePlay = () => {
   const [playerMove, setPlayerMove] = useState({});
   const [opponentMove, setOpponentMove] = useState({});
   const [openResultModal, setOpenResultModal] = useState(false);
   const [openGameResultModal, setOpenGameResultModal] = useState(false);
-  const [allPlayers, setAllPlayers] = useState({});
+  const [allPlayers, setAllPlayers] = useLocalStorage(ALL_PLAYERS, {});
+  const [leaderBoard, setLeaderBoard] = useLocalStorage(LEADER_BOARD, {});
+  const [playerId] = useSessionStorage(PLAYER_ID_KEY, null);
+  const [playerName] = useSessionStorage(PLAYER_NAME, null);
   //JSON.parse(localStorage.getItem(ALL_PLAYERS) || `{}`)
   const route = useRouter();
 
@@ -28,23 +33,11 @@ const useGamePlay = () => {
         setOpponentMove({ id: ev.data?.id, move: ev.data?.move });
       }
     };
+    // return () => channel.close();
   });
 
-  useEffect(() => {
-    const onPlayersUpdate = (e) => {
-      const { key, newValue } = e;
-      if (key === ALL_PLAYERS) {
-        setAllPlayers(JSON.parse(newValue));
-      }
-    };
-    window.addEventListener("storage", onPlayersUpdate);
-    return () => window.removeEventListener("storage", onPlayersUpdate);
-  });
-
-  if (typeof window === "undefined") return {};
-
-  const playerId = sessionStorage.getItem(PLAYER_ID_KEY);
-  const playerName = sessionStorage.getItem(PLAYER_NAME);
+  // const playerId = sessionStorage.getItem(PLAYER_ID_KEY);
+  // const playerName = sessionStorage.getItem(PLAYER_NAME);
 
   const player = allPlayers[playerId];
   const opponent = allPlayers[player?.opponentId];
@@ -52,7 +45,7 @@ const useGamePlay = () => {
   const channel = new BroadcastChannel(`game_started`);
 
   const handleClearAllPlayersMove = () => {
-    localStorage.setItem(ALL_PLAYERS, JSON.stringify(allPlayers));
+    setAllPlayers(allPlayers);
     setPlayerMove((player) => ({ ...player, move: null }));
     setOpponentMove((opponent) => ({ ...opponent, move: null }));
     setOpenResultModal(null);
@@ -73,7 +66,7 @@ const useGamePlay = () => {
   const handlePlayAgain = () => {
     player.score = 0;
     opponent.score = 0;
-    localStorage.setItem(ALL_PLAYERS, JSON.stringify(allPlayers));
+    setAllPlayers(allPlayers);
     setPlayerMove((player) => ({ ...player, move: null }));
     setOpponentMove((opponent) => ({ ...opponent, move: null }));
     setOpenGameResultModal(null);
@@ -88,7 +81,7 @@ const useGamePlay = () => {
       opponent.opponentId = null;
       opponent.game_state = GAME_STATE_ENUM.NOT_STARTED;
     }
-    localStorage.setItem(ALL_PLAYERS, JSON.stringify(allPlayers));
+    setAllPlayers(allPlayers);
     route.push(Routes.LOBBY);
   };
 
@@ -106,14 +99,16 @@ const useGamePlay = () => {
   if (player?.score >= 5 && !openGameResultModal) {
     handleClearAllPlayersMove();
     player.points = (player?.points || 0) + 3;
-    localStorage.setItem(LEADER_BOARD, JSON.stringify(allPlayers));
+    setLeaderBoard(allPlayers);
+    // localStorage.setItem(LEADER_BOARD, JSON.stringify(allPlayers));
     setOpenGameResultModal({ won: player });
   }
 
   if (opponent?.score >= 5 && !openGameResultModal) {
     handleClearAllPlayersMove();
     opponent.points = (opponent?.points || 0) + 3;
-    localStorage.setItem(LEADER_BOARD, JSON.stringify(allPlayers));
+    setLeaderBoard(allPlayers);
+    // localStorage.setItem(LEADER_BOARD, JSON.stringify(allPlayers));
     setOpenGameResultModal({ won: opponent });
   }
 

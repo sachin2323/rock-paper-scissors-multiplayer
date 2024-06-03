@@ -1,6 +1,5 @@
 "use client";
 
-import { THEME_BG_COLOR } from "@/lib/constants";
 import Lobby from "./components/Lobby";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -14,7 +13,7 @@ export default function Page() {
   return (
     <main>
       <div className="flex flex-col ">
-        <div className={`bg-[${THEME_BG_COLOR}]`}>
+        <div className={`bg-[#26006E]`}>
           <Image
             src={"/rockPaperScissorMain.svg"}
             width="300"

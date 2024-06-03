@@ -19,7 +19,6 @@ import {
 } from "@/components/ui/dialog";
 import useLeaderBoard from "@/app/hooks/useLeaderBoard";
 import { ScrollArea } from "./ui/scroll-area";
-import { THEME_BG_COLOR } from "@/lib/constants";
 
 const LeaderBoard = ({ openLeaderBoard, onOpenLeaderBoard }) => {
   const { leaderBoard, playerId } = useLeaderBoard();
@@ -52,7 +51,7 @@ const LeaderBoard = ({ openLeaderBoard, onOpenLeaderBoard }) => {
                           key={player?.id}
                           className={
                             player.id === playerId &&
-                            `bg-[${THEME_BG_COLOR}] text-white hover:text-black`
+                            `bg-[#26006E] text-white hover:text-black`
                           }
                         >
                           <TableCell className="font-medium capitalize">

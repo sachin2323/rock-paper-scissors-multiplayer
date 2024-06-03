@@ -2,29 +2,16 @@
 
 import { LEADER_BOARD, PLAYER_ID_KEY } from "@/lib/constants";
 
-import { useEffect, useState } from "react";
+import useLocalStorage from "./useLocalStorage";
+import useSessionStorage from "./useSessionStorage";
 
 const useLeaderBoard = () => {
-  const [leaderBoard, setLeaderBoard] = useState(
-    JSON.parse(localStorage.getItem(LEADER_BOARD) || `{}`)
-  );
+  const [leaderBoard, setLeaderBoard] = useLocalStorage(LEADER_BOARD, {});
+  const [playerId] = useSessionStorage(PLAYER_ID_KEY, null);
 
-  useEffect(() => {
-    const onPlayerAddition = (e) => {
-      const { key, newValue } = e;
-      if (key === LEADER_BOARD) {
-        setLeaderBoard(JSON.parse(newValue));
-      }
-    };
-    window.addEventListener("storage", onPlayerAddition);
-    return () => window.removeEventListener("storage", onPlayerAddition);
-  });
+  // const playerId = sessionStorage.getItem(PLAYER_ID_KEY);
 
-  if (typeof window === "undefined") return {};
-
-  const playerId = sessionStorage.getItem(PLAYER_ID_KEY);
-
-  const modifiedLeaderBoard = Object.values(leaderBoard).sort(
+  const modifiedLeaderBoard = Object.values(leaderBoard || {}).sort(
     (a, b) => (b?.points || 0) - (a?.points || 0)
   );
 

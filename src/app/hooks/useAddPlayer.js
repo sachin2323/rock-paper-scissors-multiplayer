@@ -10,17 +10,26 @@ import {
   PLAYER_NAME,
   Routes,
 } from "@/lib/constants";
+import useLocalStorage from "./useLocalStorage";
+import useSessionStorage from "./useSessionStorage";
 
 const useAddPlayer = () => {
   const router = useRouter();
   const [playerName, setPlayerName] = useState("");
   const [error, setError] = useState("");
+  const [allPlayers, setAllPlayers] = useLocalStorage(ALL_PLAYERS, {});
+  const [leaderBoard, setLeaderBoard] = useLocalStorage(LEADER_BOARD, {});
+  const [playerId, setPlayerId] = useSessionStorage(PLAYER_ID_KEY, null);
+  const [sessionPlayerName, setSessionPlayerName] = useSessionStorage(
+    PLAYER_NAME,
+    null
+  );
 
-  if (typeof window === "undefined") return {};
+  // if (typeof window === "undefined") return {};
 
-  const playerId = sessionStorage.getItem(PLAYER_ID_KEY);
-  const allPlayers = JSON.parse(localStorage.getItem(ALL_PLAYERS) || `{}`);
-  const allNames = Object.values(allPlayers).map((player) =>
+  // const playerId = sessionStorage.getItem(PLAYER_ID_KEY);
+  // const allPlayers = JSON.parse(localStorage.getItem(ALL_PLAYERS) || `{}`);
+  const allNames = Object.values(allPlayers || {}).map((player) =>
     player.name.toLowerCase()
   );
 
@@ -33,30 +42,31 @@ const useAddPlayer = () => {
       setError(ERRORS_ENUM.NAME_ERR);
       return;
     }
-    let playerId = sessionStorage.getItem(PLAYER_ID_KEY);
     if (!playerId) {
-      playerId = `${Date.now()}${Math.random()}`; // generate unique UUID
-      sessionStorage.setItem(PLAYER_ID_KEY, playerId);
-      sessionStorage.setItem(PLAYER_NAME, playerName);
+      console.log("herree");
+      const id = `${Date.now()}${Math.random()}`; // generate unique UUID
+      // sessionStorage.setItem(PLAYER_ID_KEY, playerId);
+      // sessionStorage.setItem(PLAYER_NAME, playerName);
       const players = {
         ...allPlayers,
-        [playerId]: { name: playerName, id: playerId },
+        [id]: { name: playerName, id: id },
       };
-      localStorage.setItem(ALL_PLAYERS, JSON.stringify(players));
-      localStorage.setItem(LEADER_BOARD, JSON.stringify(players));
+      setPlayerId(id);
+      setSessionPlayerName(playerName);
+      setAllPlayers(players);
+      setLeaderBoard(players);
+      // localStorage.setItem(ALL_PLAYERS, JSON.stringify(players));
+      // localStorage.setItem(LEADER_BOARD, JSON.stringify(players));
     }
-    return playerId;
   };
 
   const handleNavToLobby = () => {
-    const playerId = createPlayer();
-    if (!!playerId) {
-      router.push(Routes.LOBBY);
-    }
+    createPlayer();
   };
 
   if (!!playerId) {
-    handleNavToLobby();
+    console.log("this ran");
+    router.push(Routes.LOBBY);
   }
 
   return {

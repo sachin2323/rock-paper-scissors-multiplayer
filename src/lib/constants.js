@@ -37,5 +37,3 @@ export const Routes = {
 export const ERRORS_ENUM = {
   NAME_ERR: "NAME_ERR",
 };
-
-export const THEME_BG_COLOR = "#26006E";
