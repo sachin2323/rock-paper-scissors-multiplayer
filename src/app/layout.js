@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         {children}
-        <div className="z-10 fixed bottom-5 right-5">
+        <div className="fixed bottom-3 right-3">
           <Button
             className="mr-4 bg-blue-900"
             onClick={() => {
