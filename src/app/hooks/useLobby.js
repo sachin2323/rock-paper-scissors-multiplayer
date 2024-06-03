@@ -20,7 +20,6 @@ const useLobby = () => {
   const [allPlayers, setAllPlayers] = useLocalStorage(ALL_PLAYERS, {});
   const [playerId] = useSessionStorage(PLAYER_ID_KEY, null);
   const [playerName] = useSessionStorage(PLAYER_NAME, null);
-  //JSON.parse(localStorage.getItem(ALL_PLAYERS) || `{}`)
   const router = useRouter();
 
   useEffect(() => {
@@ -38,7 +37,6 @@ const useLobby = () => {
             allPlayers[ev.data.opponentId].game_state = GAME_STATE_ENUM.LIVE;
             allPlayers[ev.data.opponentId].opponentId = playerId;
             setAllPlayers(allPlayers);
-            // localStorage.setItem(ALL_PLAYERS, JSON.stringify(allPlayers));
             router.push(Routes.GAME_PLAY);
           }
           break;
@@ -49,22 +47,7 @@ const useLobby = () => {
           break;
       }
     };
-    // return () => channel.close();
   });
-
-  // useEffect(() => {
-  //   const onPlayerAddition = (e) => {
-  //     const { key, newValue } = e;
-  //     if (key === ALL_PLAYERS) {
-  //       setAllPlayers(JSON.parse(newValue));
-  //     }
-  //   };
-  //   window.addEventListener("storage", onPlayerAddition);
-  //   return () => window.removeEventListener("storage", onPlayerAddition);
-  // });
-
-  // const playerId = sessionStorage.getItem(PLAYER_ID_KEY);
-  // const playerName = sessionStorage.getItem(PLAYER_NAME);
 
   if (!playerId) {
     router.push(Routes.HOME);

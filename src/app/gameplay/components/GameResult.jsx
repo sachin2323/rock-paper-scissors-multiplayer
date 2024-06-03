@@ -38,6 +38,7 @@ const GameResult = ({ variant, result, onResetGame, onPlayAgain }) => {
                   </CardHeader>
                   <CardContent className="flex justify-center">
                     <Image
+                      unoptimized
                       src={variant === "Won" ? "/victory.gif" : "/defeat.gif"}
                       width="200"
                       height="200"

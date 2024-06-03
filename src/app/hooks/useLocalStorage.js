@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from "react";
 
 const useLocalStorage = (storageKey, initialValue) => {
@@ -32,8 +33,8 @@ const useLocalStorage = (storageKey, initialValue) => {
         setState(JSON.parse(newValue));
       }
     };
-    window.addEventListener("storage", onStorageAddition);
-    return () => window.removeEventListener("storage", onStorageAddition);
+    window?.addEventListener?.("storage", onStorageAddition);
+    return () => window?.removeEventListener?.("storage", onStorageAddition);
   });
 
   return [state, setValue];

@@ -24,7 +24,6 @@ const useGamePlay = () => {
   const [leaderBoard, setLeaderBoard] = useLocalStorage(LEADER_BOARD, {});
   const [playerId] = useSessionStorage(PLAYER_ID_KEY, null);
   const [playerName] = useSessionStorage(PLAYER_NAME, null);
-  //JSON.parse(localStorage.getItem(ALL_PLAYERS) || `{}`)
   const route = useRouter();
 
   useEffect(() => {
@@ -33,14 +32,10 @@ const useGamePlay = () => {
         setOpponentMove({ id: ev.data?.id, move: ev.data?.move });
       }
     };
-    // return () => channel.close();
   });
 
-  // const playerId = sessionStorage.getItem(PLAYER_ID_KEY);
-  // const playerName = sessionStorage.getItem(PLAYER_NAME);
-
-  const player = allPlayers[playerId];
-  const opponent = allPlayers[player?.opponentId];
+  const player = allPlayers?.[playerId];
+  const opponent = allPlayers?.[player?.opponentId];
 
   const channel = new BroadcastChannel(`game_started`);
 
@@ -100,7 +95,6 @@ const useGamePlay = () => {
     handleClearAllPlayersMove();
     player.points = (player?.points || 0) + 3;
     setLeaderBoard(allPlayers);
-    // localStorage.setItem(LEADER_BOARD, JSON.stringify(allPlayers));
     setOpenGameResultModal({ won: player });
   }
 
@@ -108,7 +102,6 @@ const useGamePlay = () => {
     handleClearAllPlayersMove();
     opponent.points = (opponent?.points || 0) + 3;
     setLeaderBoard(allPlayers);
-    // localStorage.setItem(LEADER_BOARD, JSON.stringify(allPlayers));
     setOpenGameResultModal({ won: opponent });
   }
 

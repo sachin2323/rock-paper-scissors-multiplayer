@@ -25,10 +25,6 @@ const useAddPlayer = () => {
     null
   );
 
-  // if (typeof window === "undefined") return {};
-
-  // const playerId = sessionStorage.getItem(PLAYER_ID_KEY);
-  // const allPlayers = JSON.parse(localStorage.getItem(ALL_PLAYERS) || `{}`);
   const allNames = Object.values(allPlayers || {}).map((player) =>
     player.name.toLowerCase()
   );
@@ -43,10 +39,7 @@ const useAddPlayer = () => {
       return;
     }
     if (!playerId) {
-      console.log("herree");
       const id = `${Date.now()}${Math.random()}`; // generate unique UUID
-      // sessionStorage.setItem(PLAYER_ID_KEY, playerId);
-      // sessionStorage.setItem(PLAYER_NAME, playerName);
       const players = {
         ...allPlayers,
         [id]: { name: playerName, id: id },
@@ -55,8 +48,6 @@ const useAddPlayer = () => {
       setSessionPlayerName(playerName);
       setAllPlayers(players);
       setLeaderBoard(players);
-      // localStorage.setItem(ALL_PLAYERS, JSON.stringify(players));
-      // localStorage.setItem(LEADER_BOARD, JSON.stringify(players));
     }
   };
 
@@ -65,7 +56,6 @@ const useAddPlayer = () => {
   };
 
   if (!!playerId) {
-    console.log("this ran");
     router.push(Routes.LOBBY);
   }
 
