@@ -16,7 +16,7 @@ import useSessionStorage from "./useSessionStorage";
 const useAddPlayer = () => {
   const router = useRouter();
   const [playerName, setPlayerName] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
   const [allPlayers, setAllPlayers] = useLocalStorage(ALL_PLAYERS, {});
   const [leaderBoard, setLeaderBoard] = useLocalStorage(LEADER_BOARD, {});
   const [playerId, setPlayerId] = useSessionStorage(PLAYER_ID_KEY, null);
@@ -30,6 +30,7 @@ const useAddPlayer = () => {
   );
 
   const handlePlayerName = (value) => {
+    setError(null);
     setPlayerName(value);
   };
 

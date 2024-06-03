@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { GAME_EXIT_ENUM } from "@/lib/constants";
 
 const LostConnection = ({ onGameReset }) => {
   return (
@@ -26,7 +27,11 @@ const LostConnection = ({ onGameReset }) => {
             height="200"
             alt={"A Rock Paper Scissor Game Icon"}
           />
-          <Button onClick={() => onGameReset({ context: "CONNECTION_LOST" })}>
+          <Button
+            onClick={() =>
+              onGameReset({ context: GAME_EXIT_ENUM.CONNECTION_LOST })
+            }
+          >
             Go to game lobby
           </Button>
         </CardContent>

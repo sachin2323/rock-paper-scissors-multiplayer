@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { GAME_EXIT_ENUM } from "@/lib/constants";
 import React from "react";
 
 const Header = ({ playerName, onGameReset, onLogout }) => {
@@ -13,7 +14,7 @@ const Header = ({ playerName, onGameReset, onLogout }) => {
         <Button
           variant="secondary"
           className="mr-3"
-          onClick={() => onGameReset({ context: "CONNECTION_LOST" })}
+          onClick={() => onGameReset({ context: GAME_EXIT_ENUM.PLAYER_EXIT })}
         >
           Exit Match
         </Button>

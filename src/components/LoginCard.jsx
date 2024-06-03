@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/card";
 
 const LoginCard = ({ playerName, error, onAddPlayer, onChangeName }) => {
+  const MAX_CHARS = 10;
   return (
     <div className="max-w-md mx-auto p-4 mt-5 sm:mt-7 sm:p-0">
       <Card>
@@ -24,12 +25,20 @@ const LoginCard = ({ playerName, error, onAddPlayer, onChangeName }) => {
             className="text-black mb-5"
             value={playerName}
             onChange={(e) => {
-              onChangeName((e.target.value || "").trim());
+              const value = (e.target.value || "").trim();
+              if (value.length > MAX_CHARS) return;
+              onChangeName(value);
             }}
           />
           {!!error && (
-            <p className="text-red-400">
+            <p className="text-red-400 text-xs">
               This name is taken. Please try another
+            </p>
+          )}
+          {!error && (
+            <p className="text-gray-400 text-xs">
+              Name should be unique, special chars are allowed, space is not
+              allowed, Max {MAX_CHARS} chars
             </p>
           )}
         </CardContent>

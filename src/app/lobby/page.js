@@ -12,7 +12,7 @@ export default function Page() {
 
   return (
     <main>
-      <div className="flex flex-col ">
+      <div className="flex flex-col">
         <div className={`bg-[#26006E]`}>
           <Image
             src={"/rockPaperScissorMain.svg"}

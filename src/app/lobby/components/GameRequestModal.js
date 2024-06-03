@@ -15,21 +15,27 @@ const GameRequestModal = ({ requestModal, onCloseRequestModal }) => {
     <Dialog
       open={!!requestModal}
       onOpenChange={() => {
-        onCloseRequestModal();
+        onCloseRequestModal({
+          opponentName: requestModal.opponentName,
+          opponentId: requestModal.opponentId,
+        });
       }}
     >
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Game Request Sent !</DialogTitle>
           <DialogDescription>
-            <p className="text-lg py-2 mb-2">
+            <p className="text-lg py-2 mb-2 capitalize">
               Game request sent to {requestModal.opponentName}
             </p>
 
             <Button
               variant="destructive"
               onClick={() => {
-                onCloseRequestModal();
+                onCloseRequestModal({
+                  opponentName: requestModal.opponentName,
+                  opponentId: requestModal.opponentId,
+                });
               }}
             >
               Cancel Request

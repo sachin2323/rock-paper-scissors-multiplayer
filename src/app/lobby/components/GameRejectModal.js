@@ -22,7 +22,7 @@ const GameRejectModal = ({ rejectModal, onCloseRejectModal }) => {
         <DialogHeader>
           <DialogTitle>Game Request Rejected !</DialogTitle>
           <DialogDescription>
-            <p className="py-2 mb-2 text-lg">
+            <p className="py-2 mb-2 text-lg capitalize">
               {rejectModal.opponentName} has rejected to play with you.
             </p>
             <Button

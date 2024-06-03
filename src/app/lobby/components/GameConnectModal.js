@@ -19,10 +19,10 @@ const GameConnectModal = ({ connectModal, onCloseConnectModal }) => {
           <DialogTitle>Game Request Received !</DialogTitle>
           <DialogDescription>
             <div className="py-2 my-2">
-              <p className="text-lg">
-                {connectModal.playerName} has requested to play with you.
+              <p className="text-base text-left capitalize">
+                {connectModal.playerName} has requested to play with you. Please
+                accept to start the game.
               </p>
-              <p className="text-lg">Please accept to start the game.</p>
             </div>
             <div className="flex justify-between">
               <Button

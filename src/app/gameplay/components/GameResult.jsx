@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/button";
 
 import React from "react";
 import Image from "next/image";
+import { GAME_EXIT_ENUM } from "@/lib/constants";
 
 const GameResult = ({ variant, result, onResetGame, onPlayAgain }) => {
   return (
@@ -49,7 +50,9 @@ const GameResult = ({ variant, result, onResetGame, onPlayAgain }) => {
                     <Button onClick={() => onPlayAgain()}>Play Again</Button>
                     <Button
                       variant="destructive"
-                      onClick={() => onResetGame({ context: "EXIT_GAME" })}
+                      onClick={() =>
+                        onResetGame({ context: GAME_EXIT_ENUM.PLAYER_EXIT })
+                      }
                     >
                       Exit
                     </Button>

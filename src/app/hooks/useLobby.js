@@ -26,9 +26,10 @@ const useLobby = () => {
     channel.onmessage = (ev) => {
       switch (ev.data.state) {
         case CONNECTION_ENUM.REQUEST:
-          if (ev.data.playerId === playerId) return;
-          setRejectModal(null);
-          setConnectModal(ev.data);
+          if (ev.data.opponentId === playerId) {
+            setRejectModal(null);
+            setConnectModal(ev.data);
+          }
           break;
         case CONNECTION_ENUM.ACCEPT:
           if (ev.data.playerId === playerId) {
@@ -44,6 +45,12 @@ const useLobby = () => {
           setConnectModal(null);
           setRequestModal(null);
           setRejectModal(ev.data);
+          break;
+        case CONNECTION_ENUM.CANCEL:
+          if (ev.data.opponentId === playerId) {
+            setConnectModal(null);
+            setRequestModal(null);
+          }
           break;
       }
     };
@@ -89,13 +96,27 @@ const useLobby = () => {
     });
   };
 
+  const handleCancelFlow = ({ opponentId, opponentName }) => {
+    const cancelReq = {
+      playerName: playerName,
+      playerId: playerId,
+      opponentId: opponentId,
+      opponentName: opponentName,
+      state: CONNECTION_ENUM.CANCEL,
+    };
+    channel.postMessage(cancelReq);
+  };
+
   const handleCloseRejectModal = () => {
     setRejectModal(false);
   };
 
-  const handleCloseRequestModal = () => {
+  const handleCloseRequestModal = ({ opponentId, opponentName }) => {
     setRequestModal(false);
-    setConnectModal(false);
+    handleCancelFlow({
+      opponentId,
+      opponentName,
+    });
   };
 
   const handleCloseConnectModal = () => {

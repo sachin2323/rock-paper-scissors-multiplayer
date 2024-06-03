@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import {
   ALL_PLAYERS,
+  GAME_EXIT_ENUM,
   GAME_STATE_ENUM,
   LEADER_BOARD,
   PLAYER_ID_KEY,
@@ -68,10 +69,14 @@ const useGamePlay = () => {
   };
 
   const handleGameReset = ({ context }) => {
+    if (!player) {
+      route.push(Routes.HOME);
+      return;
+    }
     player.score = 0;
     player.opponentId = null;
     player.game_state = GAME_STATE_ENUM.NOT_STARTED;
-    if (context !== "CONNECTION_LOST") {
+    if (context !== GAME_EXIT_ENUM.CONNECTION_LOST) {
       opponent.score = 0;
       opponent.opponentId = null;
       opponent.game_state = GAME_STATE_ENUM.NOT_STARTED;

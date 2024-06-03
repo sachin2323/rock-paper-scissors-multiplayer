@@ -14,6 +14,12 @@ export const CONNECTION_ENUM = {
   REQUEST: "REQUEST",
   ACCEPT: "ACCEPT",
   REJECT: "REJECT",
+  CANCEL: "CANCEL",
+};
+
+export const GAME_EXIT_ENUM = {
+  CONNECTION_LOST: "CONNECTION_LOST",
+  PLAYER_EXIT: "PLAYER_EXIT",
 };
 
 export const MOVES_ENUM = {
