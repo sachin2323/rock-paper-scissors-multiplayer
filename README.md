@@ -4,7 +4,7 @@ Web based multiplayer rock paper scissor game
 
 # Instructions to Play
 
-1) Open [Game](https://rock-paper-scissors-multitabs.vercel.app/) in 2 tabs;
+1) Open [Game](https://rock-paper-scissors-multitabs.vercel.app/){:target="_blank"} in 2 tabs;
 
 2) Login with your favourite username on both tabs.
 
